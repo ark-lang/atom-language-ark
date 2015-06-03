@@ -1,0 +1,260 @@
+'scopeName': 'source.ark'
+'name': 'Ark'
+'comment': 'Ark programming language'
+'fileTypes': [
+  'ark'
+]
+'foldingStartMarker': '({|\\()\\s*$'
+'foldingStopMarker': '(}|\\))\\s*$'
+'patterns': [
+  {
+    'comment': 'Block comments'
+    'begin': '/\\*'
+    'captures':
+      '0':
+        'name': 'punctuation.definition.comment.ark'
+    'end': '\\*/'
+    'name': 'comment.block.ark'
+  }
+  {
+    'comment': 'Line comments'
+    'match': '(//).*$\\n?'
+    'captures':
+      '1':
+        'name': 'punctuation.definition.comment.ark'
+    'name': 'comment.line.double-slash.ark'
+  }
+  {
+    'comment': 'Documentation comments'
+    'match': '(#).*$\\n?'
+    'captures':
+      '1':
+        'name': 'punctuation.definition.comment.ark'
+    'name': 'comment.line.number-sign.ark'
+  }
+#  {
+#    'comment': 'Syntax error'
+#    'match': '\\[\\](\\s+)'
+#    'captures':
+#      '1':
+#        'name': 'invalid.illegal.ark'
+#  }
+#  {
+#    'comment': 'Syntax error sending channels'
+#    'match': '\\bchan([\\t ]+)<\-'
+#    'captures':
+#      '1':
+#        'name': 'invalid.illegal.ark'
+#  }
+#  {
+#    'comment': 'Syntax error receiving channels'
+#    'match': '<\\-([\\t ]+)chan\\b'
+#    'captures':
+#      '1':
+#        'name': 'invalid.illegal.ark'
+#  }
+  {
+    'comment': 'Function declarations'
+    'match': '^(\\bfunc\\b)(\\s+(\\([^\\)]+\\)\\s+)?([\\w_]+)(?=\\())?' # TODO
+    'captures':
+      '1':
+        'name': 'keyword.ark'
+      '3':
+        'patterns': [
+          {
+            'include': '#operators'
+          }
+          {
+            'include': '#variables'
+          }
+        ]
+      '4':
+        'name': 'support.function.decl.ark'
+  }
+  {
+    'comment': 'Short variable declarations'
+    'match': '([\\w_]+)(?=\\s*:=)'
+    'captures':
+      '1':
+        'name': 'variable.ark'
+  }
+#  {
+#    'name': 'support.function.built-in.ark'
+#    'match': '\\b(append|cap|close|complex|copy|delete|imag|len|make|new|panic|print|println|real|recover)\\b'
+#  }
+  {
+    'comment': 'Functions'
+    'match': '(\\bfunc\\b)|([\\w_]+)(?=\\()'
+    'captures':
+      '1':
+        'name': 'keyword.ark'
+      '2':
+        'name': 'support.function.ark'
+  }
+  {
+    'comment': 'Attribute'
+    'name': 'meta.attribute.ark'
+    'begin': '\\['
+    'end': '\\]'
+    'patterns': [
+      { 'include': '#string_literal' }
+    ]
+  }
+  {
+    'name': 'storage.type.ark'
+    'match': '\\b(rune|str|bool|int|uint|i8|i16|i32|i64|i128|u8|u16|u32|u64|u128)\\b'
+  }
+  {
+    'name': 'invalid.illegal.numeric.ark'
+    'match': '\\b0o[0-7_]*[^0-7_][\\d_]*\\b'
+  }
+  {
+    'name': 'invalid.illegal.numeric.ark'
+    'match': '\\b0b[01_]*[^01_][\\d_]*\\b'
+  }
+  {
+    'name': 'invalid.illegal.numeric.ark'
+    'match': '\\b0[xX][0-9a-fA-F_]*[^0-9a-fA-F_]\\w*\\b'
+  }
+  {
+    'name': 'constant.numeric.ark'
+    'match': '\\b[\\d_]+\\.\\d*(([Ee][\-\+]\\d+)?[fdq]?\\b)?' # TODO
+  }
+  {
+    'name': 'constant.numeric.ark'
+    'match': '([\\d_]+([Ee][\-\+]\\d+)?)\\b' # TODO
+  }
+  {
+    'name': 'constant.numeric.ark'
+    'match': '\\b((0x[0-9a-fA-F_]+)|(0b[01_]+)|(0o[0-7_]+)|(\\d+([Ee]\\d+)?)|(\\d+[Ee][\-\+]\\d+))\\b' # TODO
+  }
+  {
+    'name': 'keyword.ark'
+    'match': '\\b(func|struct|mut|static)\\b'
+  }
+  {
+    'name': 'keyword.directive.ark'
+    'match': '\\b(use)\\b'
+  }
+  {
+    'name': 'keyword.statement.ark'
+    'match': '\\b(defer|return|break|continue)\\b'
+  }
+  {
+    'name': 'keyword.conditional.ark'
+    'match': '\\b(if|else)\\b'
+  }
+  {
+    'name': 'keyword.repeat.ark'
+    'match': '\\b(for)\\b'
+  }
+  {
+    'name': 'constant.language.ark'
+    'match': '\\b(true|false|Some|None)\\b'
+  }
+  {
+    'include': '#string_escaped_char'
+  }
+  {
+    'include': '#strings'
+  }
+  {
+    'include': '#runes'
+  }
+  {
+    'include': '#operators'
+  }
+  {
+    'include': '#variables'
+  }
+]
+'repository':
+  'string_escaped_char':
+    'patterns': [
+      {
+        'name': 'constant.character.escape.ark'
+        'match': '\\\\([0-7]{3}|[abfnrtv\\\\\'"]|x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})' # TODO
+      }
+      {
+        'name': 'invalid.illegal.unknown-escape.ark'
+        'match': '\\\\[^0-7xuUabfnrtv\\\'"]' # TODO
+      }
+    ]
+  'operators':
+    'patterns': [
+      {
+        "name": "keyword.operator.ark",
+        "match": "(\\+|&|\\+=|&=|&&|==|!=|\\-|\\||\\-=|\\|=|\\|\\||<|<=|\\*|\\^|\\*=|\\^=|<\\-|>|>=|/|<<|/=|<<=|\\+\\+|=|:=|;|%|>>|%=|>>=|\\-\\-|!|\\.\\.\\.|&\\^|&\\^=)" # TODO
+      }
+      {
+        "name": "keyword.operator.bracket.ark",
+        "match": "(\\(|\\)|\\[|\\]|\\{|\\})" # TODO
+      }
+      {
+        "name": "keyword.operator.punctuation.ark", # TODO
+        "match": "(\\.|,|:)"
+      }
+    ]
+  'variables':
+    'patterns': [
+      {
+        'name': 'variable.ark'
+        'match': '\\b[\\w_][\\w\\d_]*\\b',# TODO
+      }
+    ]
+  'printf_verbs':
+    'patterns': [
+      {
+        'name': 'constant.escape.format-verb.ark'
+        'match': '%(\\[\\d+\\])?([\\+#\\-0\\x20]{,2}((\\d+|\\*)?(\\.?(\\d+|\\*|(\\[\\d+\\])\\*?)?(\\[\\d+\\])?)?))?[vT%tbcdoqxXUbeEfFgGsp]' # TODO
+      }
+    ]
+  'strings':
+    'patterns': [
+      {
+        'begin': '"'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.ark'
+        'end': '"'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.ark'
+        'name': 'string.quoted.double.ark'
+        'patterns': [
+          {
+            'include': '#string_escaped_char'
+          }
+          {
+            'include': '#printf_verbs'
+          }
+        ]
+      }
+      {
+        'begin': '`'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.ark'
+        'end': '`'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.ark'
+        'name': 'string.quoted.raw.ark',
+        'patterns': [
+          {
+            'include': '#printf_verbs'
+          }
+        ]
+      }
+    ]
+  'runes':
+    'patterns': [
+      {
+        'name': 'constant.other.rune.ark'
+        'match': '\\\'(\\\\([0-7]{3}|[abfnrtv\\\\\'"]|x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})|\\\p{Any})\\\'' # TODO
+      }
+      {
+        'name': 'invalid.illegal.rune.ark'
+        'match': '\\\'.*\\\''
+      }
+    ]
