@@ -1,6 +1,6 @@
 # atom-language-ark
 
-This repo contains the `language-ark` package for Atom which add supports for the Ark programing language.
+This repo contains the `language-ark` package for Atom which add supports for the [Ark programing language](https://github.com/ark-lang/ark).
 
 Currently, all the package does is add syntax highlighting, but other things such as snippets will come once the language is more fleshed-out.
 
