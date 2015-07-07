@@ -91,18 +91,18 @@
       '2':
         'name': 'support.function.ark'
   }
-  {
-    'comment': 'Attribute'
-    'name': 'meta.attribute.ark'
-    'begin': '\\['
-    'end': '\\]'
-    'patterns': [
-      { 'include': '#string_literal' }
-    ]
-  }
+#  {
+#    'comment': 'Attribute'
+#    'name': 'meta.attribute.ark'
+#    'begin': '\\['
+#    'end': '\\]'
+#    'patterns': [
+#      { 'include': '#string_literal' }
+#    ]
+#  }
   {
     'name': 'storage.type.ark'
-    'match': '\\b(rune|str|bool|int|uint|i8|i16|i32|i64|i128|u8|u16|u32|u64|u128)\\b'
+    'match': '\\b(rune|str|bool|int|uint|s8|s16|s32|s64|s128|u8|u16|u32|u64|u128|f32|f64|f128)\\b'
   }
   {
     'name': 'invalid.illegal.numeric.ark'
@@ -130,7 +130,7 @@
   }
   {
     'name': 'keyword.ark'
-    'match': '\\b(func|struct|mut|static)\\b'
+    'match': '\\b(func|struct|mut|static|pub)\\b'
   }
   {
     'name': 'keyword.directive.ark'
